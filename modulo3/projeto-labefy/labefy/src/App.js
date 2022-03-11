@@ -1,18 +1,19 @@
 import React from 'react';
 import SignUpPage from "./comp/SignUpPage";
 import Users from "./comp/Users";
-import { Header } from './estilo/Style'
+import { Header, Button } from './estilo/Style'
  
 class App extends React.Component {
   state = {
-    currentPage: "signUp"
+    currentPage: "signUp",
+    page:"Playlist"
   }
 
   changePage = () => {
     if (this.state.currentPage === "signUp") {
-      this.setState({ currentPage: "users" });
+      this.setState({ currentPage: "users", page: "Criar Playlist" });
     } else {
-      this.setState({ currentPage: "signUp" });
+      this.setState({ currentPage: "signUp", page: "Playlist" });
     }
   };
 
@@ -20,8 +21,7 @@ class App extends React.Component {
     return (
         <div>
           <Header>Labefy
-          <button onClick={this.changePage}>Trocar de tela</button>
-          <br/>
+          <Button onClick={this.changePage}>{this.state.page}</Button>
           </Header>
           {this.state.currentPage === "signUp" ? <SignUpPage /> : <Users />}
         </div>

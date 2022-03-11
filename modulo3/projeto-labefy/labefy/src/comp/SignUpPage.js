@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { MeuEstilo } from "../estilo/Style";
+import { MeuEstilo, Button} from "../estilo/Style";
+
+const labefy = "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/"
 
 class SignUpPage extends React.Component {
   state = {
@@ -24,16 +26,14 @@ class SignUpPage extends React.Component {
     }
     axios
       .post(
-        "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists",
-        body,
-        axiosConfig
+        labefy, body, axiosConfig
       )
       .then(() => {
-        alert(`Playlist ${this.state.name} criado com sucesso!`)
+        alert(`Playlist "${this.state.name}" criado com sucesso!`)
         this.setState({ name: ""})
       })
       .catch(error => {
-        alert("Erro ao criar o usuário")
+        alert("Erro ao criar o playlist")
         console.log(error)
       })
   }
@@ -49,7 +49,7 @@ class SignUpPage extends React.Component {
           value={this.state.name}
           onChange={this.handleNameChange}
         />
-        <button onClick={this.handleCreateUser}>Criar Playlist</button>
+        <Button onClick={this.handleCreateUser}>Criar Playlist</Button>
       </MeuEstilo>
       <hr/>
       </div>

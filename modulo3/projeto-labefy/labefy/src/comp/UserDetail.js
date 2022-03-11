@@ -3,9 +3,9 @@ import styled from "styled-components";
 import axios from "axios";
 import { Main, PlayerMusic } from "./StyleList";
 import { MeuEstilo } from "../estilo/Style";
+import Excluir from "./img/excluir.png"
 
 const DeleteButton = styled.span`
-  color: red;
   cursor: pointer;
 `
 
@@ -35,10 +35,8 @@ class UserDetail extends React.Component {
             .get(`${labefy}${this.props.userId}/tracks`, headers)
             .then((response) => {
                 this.setState({ detalheList: response.data.result.tracks })
-
             })
-            .catch((err) => {
-
+            .catch(() => {
             })
     }
 
@@ -47,7 +45,7 @@ class UserDetail extends React.Component {
             axios
                 .delete(`${labefy}${this.props.userId}/tracks/` + userId, headers)
                 .then(() => {
-                    alert("Playlist apagada")
+                    alert("Musica apagada")
                     this.detalheList()
                 })
                 .catch((err) => {
@@ -65,21 +63,15 @@ class UserDetail extends React.Component {
     }
 
     onNameChange = (event) => {
-        const novoNomeValor = event.target.value
-
-        this.setState({ name: novoNomeValor })
+        this.setState({ name: event.target.value })
     }
 
     onArtistChange = (event) => {
-        const novoArtistValor = event.target.value
-
-        this.setState({ artist: novoArtistValor })
+        this.setState({ artist: event.target.value })
     }
 
     onUrlChange = (event) => {
-        const novoUrlValor = event.target.value
-
-        this.setState({ url: novoUrlValor })
+        this.setState({ url: event.target.value })
     }
 
     addTrackToPlaylist = () => {
@@ -90,18 +82,15 @@ class UserDetail extends React.Component {
         }
         axios
             .post(
-                `${labefy}${this.props.userId}/tracks`,
-                body,
-                headers
-            )
+                `${labefy}${this.props.userId}/tracks`,body, headers)
             .then(() => {
                 this.setState({ name: "", artist: "", url: "" })
                 this.detalheList();
                 this.changeUserEditionFiel();
-                alert(`Playlist editada com sucesso!`)
+                alert(`Musica adicionada!`)
             })
             .catch(() => {
-                alert("Erro ao criar playlist")
+                alert("Erro ao criar musica")
             })
     }
 
@@ -133,32 +122,31 @@ class UserDetail extends React.Component {
                 </div>
             )
         const listMusic = this.state.detalheList.map((list) => {
-            return <PlayerMusic
+            return <PlayerMusic 
                 key={list.id}>
                 <DeleteButton
                     onClick={() => this.removeTrackFromPlaylist(list.id)}>
-                    x
+                        <img src={Excluir} />
                 </DeleteButton>
-                <b><h3>{`${list.artist} `}</h3></b> 
+                <b><h2>{`${list.artist} `}</h2></b>
                 <i>{`${list.name} `}</i>
-                <audio src={list.url} controls></audio>
+                <audio src={list.url} controls></audio>    
             </PlayerMusic>
         })
 
         return (
-            <div>
+            <MeuEstilo>      
                 <Main>
                     <button onClick={this.props.mudapagi}>
                         Voltar para playlists
                     </button>
                     {listEdit}
                 </Main>
-                <hr />
+                <hr/>
                 <Main>
                     {listMusic}
                 </Main>
-                
-            </div>
+            </MeuEstilo>
         )
     }
 }

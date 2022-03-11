@@ -2,13 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import UserDetail from "./UserDetail";
-import { Lista } from "./StyleList";
-import { MeuEstilo } from "../estilo/Style";
+import { Lista, H2 } from "./StyleList";
+import { MeuEstilo, Button } from "../estilo/Style";
+import Excluir from "./img/excluir.png"
 
 const DeleteButton = styled.span`
-  color: red;
   cursor: pointer;
 `
+const ButtonPlaylist = styled.span`
+    padding: 4px;
+    margin-right: 170px;
+    height: 30px;
+    width: 35;
+    &:hover{
+    cursor: pointer;
+    background-color: lightblue;
+}
+`
+const labefy = "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/"
 
 const axiosConfig = {
   headers: {
@@ -31,7 +42,7 @@ class Users extends React.Component {
   getAllPlaylists = () => {
     axios
       .get(
-        "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists",
+        labefy,
         axiosConfig
       )
       .then((response) => {
@@ -42,16 +53,12 @@ class Users extends React.Component {
   deletePlaylist = (userId) => {
     if (window.confirm("Tem certeza que deseja apagar a playlist?")) {
       axios
-        .delete(
-          `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${userId}`,
-          axiosConfig
-        )
+        .delete(`${labefy}${userId}`, axiosConfig)
         .then(() => {
-          alert("Usuário apagado com sucesso!")
           this.getAllPlaylists()
         })
-        .catch((e) => {
-          alert("ERRO AO APAGAR USUARIO")
+        .catch(() => {
+          alert("Erro ao apagar playlist")
         });
     }
   };
@@ -68,18 +75,15 @@ class Users extends React.Component {
     this.setState({ name: event.target.value })
   };
 
-  handleSearchUser = () => {
+  handleSearchPlaylist = () => {
     axios
-      .get(
-        `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/search?name=${this.state.name}`,
-        axiosConfig
-      )
+      .get(`${labefy}search?name=${this.state.name}`, axiosConfig)
       .then((res) => {
         this.setState({ playlists: res.data.result.playlist })
         this.setState({ name: "" })
       })
       .catch(() => {
-        alert("Usuário não encontrado")
+        alert("Playlist não encontrada")
         this.getAllPlaylists()
       });
   };
@@ -95,25 +99,25 @@ class Users extends React.Component {
       <div>
         {this.state.currentPage === "playlists" ? (
           <MeuEstilo>
-              <h4>Procurar playlist</h4>
+            <h4>Procurar playlist</h4>
             <input
-              placeholder="Nome exato para busca"
+              placeholder="Pesquisar..."
               type="text"
               value={this.state.name}
               onChange={this.handleNameChange}
             />
-            <br/>
-            <button onClick={() => this.handleSearchUser(buscarPlaylist)}>Pesquisar</button>
-            <br/>
+            <br />
+            <Button onClick={() => this.handleSearchPlaylist(buscarPlaylist)}>Pesquisar</Button>
+            <br />
             {this.state.playlists.map((user) => {
               return <Lista key={user.id}>
-                <span onClick={() => this.mudapagi(user.id)}>
-                  {user.name}
-                </span>
+                <ButtonPlaylist onClick={() => this.mudapagi(user.id)}>
+                  <H2>{user.name}</H2>
+                </ButtonPlaylist>
                 <DeleteButton
                   onClick={() => this.deletePlaylist(user.id)}
                 >
-                  X
+                  <img src={Excluir} />
                 </DeleteButton>
               </Lista>
             })}
