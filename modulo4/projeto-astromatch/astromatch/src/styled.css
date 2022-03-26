@@ -35,12 +35,13 @@
 .lista {
     width: 25vw;
     height: 85vh;
-    background: center center/cover;
     border-radius: 10px;
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     color: rgb(0, 0, 0);
     box-shadow: -9px 8px 20px 10px rgb(136 136 136 / 77%);
+
 }
 .foto {
     width: 85vw;

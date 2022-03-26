@@ -9,14 +9,14 @@ margin: 10px 10px 10px 10px;
 border-radius: 50%;
 `
 
-export default function Matches(props) {
+export default function Matches() {
     const [matches, setMatches] = useState([])
     const [teste, setTeste] = useState(true)
 
 
     useEffect(() => {
         axios
-            .get("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/victor-tsukamoto-gebru/matches")
+            .get("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/ronilson-souza-gebru/matches")
             .then(response => {
                 setMatches(response.data.matches)
                 setTeste(!teste)
@@ -29,20 +29,18 @@ export default function Matches(props) {
 
 
     const myMatches = matches.map((profile) => {
-        return < >
-            < Img src = { profile.photo }
-        /> <p> < b > { profile.name } </b></p >
-            </>
+        return <div>
+            <Img src = { profile.photo } /> 
+        <p><b> { profile.name } </b></p >
+            </div>
     }) 
 
     return (
 
         <div className="centro">
             <div className="perfil">
-                <div className="lista">           
-                   
+                <div className="lista">                          
                    { myMatches }
-                  
                 </div>               
             </div>
         </div>

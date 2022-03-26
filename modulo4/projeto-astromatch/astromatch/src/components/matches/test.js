@@ -27,7 +27,7 @@ export default function Test() {
         }
 
         axios
-            .post("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/victor-tsukamoto-gebru/choose-person", body, headers)
+            .post("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/ronilson-souza-gebru/choose-person", body, headers)
             .then(() => {             
                 setTeste(!teste)
             })
@@ -43,7 +43,7 @@ export default function Test() {
         }
 
         axios
-            .post("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/victor-tsukamoto-gebru/choose-person", body, headers)
+            .post("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/ronilson-souza-gebru/choose-person", body, headers)
             .then(() => {
                 setTeste(!teste)
             })
