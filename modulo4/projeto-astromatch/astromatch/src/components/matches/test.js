@@ -3,22 +3,24 @@ import axios from "axios"
 
 const headers = 'Content-Type: application/json'
 
-export default function Test() {
+ function Test(props) {
 
     const [listPerson, setListPerson] = useState({})
-    const [teste, setTeste] = useState(true)
 
-   
     useEffect(() => {
-        axios
-            .get("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/ronilson-souza-gebru/person")
-            .then(response => {
-                setListPerson(response.data.profile)
-            })
-            .catch(err => {
-                alert(err)
-            })
-    }, [teste])
+        person(props.listPerson)
+    }, [props.listPerson])
+
+    const person = () => {
+     axios
+        .get("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/ronilson-souza-gebru/person")
+        .then(response => {
+            setListPerson(response.data.profile)
+        })
+        .catch(err => {
+            alert(err)
+        })
+    }
 
     const like = (id) => {
         const body = {
@@ -28,8 +30,8 @@ export default function Test() {
 
         axios
             .post("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/ronilson-souza-gebru/choose-person", body, headers)
-            .then(() => {             
-                setTeste(!teste)
+            .then(() => {
+                person(listPerson)
             })
             .catch(err => {
                 alert(err)
@@ -45,7 +47,7 @@ export default function Test() {
         axios
             .post("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/ronilson-souza-gebru/choose-person", body, headers)
             .then(() => {
-                setTeste(!teste)
+                person(listPerson)
             })
             .catch(err => {
                 alert(err)
@@ -55,7 +57,7 @@ export default function Test() {
     return (
         <div className="centro">
             <div className="perfil">
-                <div className="foto" style={{ backgroundImage: `url(${listPerson.photo})` }}>
+                <div className="foto" style={{ backgroundImage: `url(${listPerson.photo})`, maxWidth:350 }}>
                     <div className="fotoComTexto">
                         <div className="nomeIdade">
                             <h2>{listPerson.name}, </h2>
@@ -76,3 +78,4 @@ export default function Test() {
         </div>
     )
 }
+export default Test

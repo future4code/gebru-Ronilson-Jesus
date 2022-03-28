@@ -1,17 +1,17 @@
 import "./styled.css"
-import Matches from "./components/matches/matches"
-import Test from "./components/matches/test";
-import ClerMacthes from "./components/matches/clearMacthes";
+import Matches from "./components/matches/Matches"
+import Test from "./components/matches/Test";
+import ClerMacthes from "./components/matches/ClearMacthes";
 import React, { useState } from "react";
 import Foto from "../src/components/matches/img/download.png"
 
 
-export default function App() {
+ function App() {
   const [currentPage, setCurrentPage] = useState("signUp")
   
   const changePage = () => {
     if (currentPage === "signUp") {
-      setCurrentPage(Matches);
+      setCurrentPage( <Matches/>);
     } else {
       setCurrentPage("signUp");
     }
@@ -31,5 +31,5 @@ export default function App() {
     </div>
   );
 }
-
+export default App
 
