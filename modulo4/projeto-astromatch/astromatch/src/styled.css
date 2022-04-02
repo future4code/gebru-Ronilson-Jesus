@@ -1,0 +1,125 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.centro {
+    background: #ffffff;
+    height: 100vh;
+    width: 100%;
+}
+
+.navBar{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 10px 0;
+    height: 60px;
+}
+
+.navBar button{
+    margin: 0 2rem;
+    font-size: 1.5rem;
+    border-radius: 40%;
+    box-shadow: 0px 0px 20px 0px rgba(224, 104, 104, 0.671);
+}
+
+button:hover{
+    transition: all 0.5s;
+    cursor: pointer;
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+
+.perfil {
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.lista {
+    width: 25vw;
+    height: 85vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: rgb(0, 0, 0);
+    box-shadow: -9px 8px 20px 10px rgb(136 136 136 / 77%);
+
+}
+.foto {
+    width: 85vw;
+    height: 85vh;
+    background: center center/cover;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-end;
+    color: rgb(0, 0, 0);
+    box-shadow: -9px 8px 20px 10px rgb(136 136 136 / 77%);
+}
+
+.fotoComTexto {
+    padding: 15px;
+    background: rgba(143, 142, 148, 0.521);
+     border-radius: 10px;
+}
+
+.nomeIdade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 1.4rem;
+}
+
+.nomeIdade h2:nth-child(2) {
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.bio {
+    line-height: 1.7rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.actions {
+    display: flex;
+    flex: auto;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 60px;
+    width: 60px; 
+    font-size: 2rem;
+}
+
+.action button{
+    margin: 0 2rem;
+    font-size: 2rem;
+    border-radius: 40%;
+    box-shadow: 0px 0px 20px 0px rgba(224, 104, 104, 0.658);
+    cursor: pointer;
+}
+
+@media (min-width: 1025px) {
+
+    .foto {
+        width: 367px;
+        height: 684px;
+    }
+
+    .navBar {
+        width: 400px;
+        margin: auto;
+    }
+  }
