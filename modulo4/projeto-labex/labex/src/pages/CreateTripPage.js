@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import useProtectedPage from '../hooks/useProtectedPage'
 import { goToAdminHomePage } from '../routes/Coordinator'
 
 const CreateTripPage = () => {
+    useProtectedPage()
     const navigate = useNavigate()
 
     return (
