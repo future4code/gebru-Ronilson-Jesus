@@ -1,63 +1,45 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { goToHomePage, goToAdminHomePage } from '../routes/Coordinator'
-import axios from 'axios'
+import { goToHomePage } from '../routes/Coordinator'
 import useProtectedPage from '../hooks/useProtectedPage'
+import useForm from '../hooks/useForm'
+import { login } from '../routes/request'
 
 const LoginPage = () => {
     useProtectedPage()
     const navigate = useNavigate()
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    const onChangeEmail = (event) => {
-        setEmail(event.target.value);
-    };
-
-    const onChangePassword = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const onSubmitLogin = () => {
-        const URL =  "https://us-central1-labenu-apis.cloudfunctions.net/labeX/ronilson-souza-gebru/login";
-        const body = {
-          email: email,
-          password: password
-        };
+    const { form, onChange } = useForm({ email: "", password: "" })
     
-        axios
-          .post(URL, body)
-          .then((res) => {
-            localStorage.setItem("token", res.data.token)
-            goToAdminHomePage(navigate);
-          })
-          .catch((err) => {
-            console.log("ERRO:", err.response)
-          })
-      }
+    const onClickLogin = (event) => {
+        event.preventDefault()
+        login(form, navigate)
+    }
 
     return (
         <div>
             <h1>Login</h1>
-            <input
-                placeholder={"E-mail"}
-                type={"email"}
-                name={"email"}
-                value={email}
-                onChange={onChangeEmail}
-            />
-            <input
-                placeholder={"Senha"}
-                type={"password"}
-                name={"password"}
-                value={password}
-                onChange={onChangePassword}
-            />
-            <div>
-                <button onClick={() => goToHomePage(navigate)}>Voltar</button>
-                <button onClick={() => onSubmitLogin()}>Entrar</button>
-            </div>
+            <form onSubmit={onClickLogin}>
+                <input
+                    name={"email"}
+                    placeholder={"E-mail"}
+                    type={"email"}
+                    value={form.email}
+                    onChange={onChange}
+                    required
+                />
+                <input
+                    name={"password"}
+                    placeholder={"Senha"}
+                    type={"password"}
+                    value={form.password}
+                    onChange={onChange}
+                    required
+                />
+                <div>
+                    <button onClick={() => goToHomePage(navigate)}>Voltar</button>
+                    <button>Entrar</button>
+                </div>
+            </form>
         </div>
     )
 }

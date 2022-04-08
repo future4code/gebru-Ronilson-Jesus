@@ -2,32 +2,19 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { goToHomePage, goToCreateTripPage, goToLoginPage } from '../routes/Coordinator'
 import useProtectedPage from '../hooks/useProtectedPage'
-import { useEffect } from "react"
-import axios from "axios"
+import RequestData from '../hooks/RequestData'
+
 
 const AdminHomePage = () => {
     useProtectedPage()
     const navigate = useNavigate()
+    const trips = RequestData("/trips")
 
-
-    const getData = () => {
-        axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/ronilson-souza-gebru/trip/SpzKSVZWJq3BKOqOxWK7`, {
-            headers: {
-                auth: localStorage.getItem("token")
-            }
-        })
-            .then((res) => 
-                console.log(res)
-            )
-            .catch((err) => {
-                alert(err.response)
-            })
-    }
-
-    useEffect(() => {
-        getData()
-    }, [])
-
+    const listTrips = trips.map((list) => {
+        return <div key={list.id}>
+            <p><b>Viagem:</b> {list.name}</p>
+        </div>
+    })
 
     const logout = (navigate) => {
         localStorage.removeItem("token")
@@ -42,6 +29,7 @@ const AdminHomePage = () => {
                 <button onClick={() => goToCreateTripPage(navigate)}>Criar Viagem</button>
                 <button onClick={() => logout(navigate)}>Logout</button>
             </div>
+            {listTrips && listTrips.length > 0 ? listTrips : <p>Caregando...</p>}
         </div>
     )
 }

@@ -6,7 +6,7 @@ export default function RequestData (link) {
 
     useEffect (()=>{
         getListTrips()
-    },[])
+    },[link])
 
     const getListTrips = () => {
         axios
