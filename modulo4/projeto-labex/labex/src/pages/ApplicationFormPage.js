@@ -18,7 +18,7 @@ const ApplicationFormPage = () => {
 
     const onClickSend = (e) => {
         e.preventDefault()
-        sendApplication(form)
+        sendApplication(form, clear)
     }
 
     return (

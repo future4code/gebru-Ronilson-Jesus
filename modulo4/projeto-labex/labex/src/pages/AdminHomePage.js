@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { goToHomePage, goToCreateTripPage, goToLoginPage } from '../routes/Coordinator'
+import { goToHomePage, goToCreateTripPage, goToLoginPage, goToTripDetailsPage } from '../routes/Coordinator'
 import useProtectedPage from '../hooks/useProtectedPage'
 import RequestData from '../hooks/RequestData'
-
+import { deleteTrip } from '../routes/request'
 
 const AdminHomePage = () => {
     useProtectedPage()
     const navigate = useNavigate()
     const trips = RequestData("/trips")
 
-    const listTrips = trips.map((list) => {
+
+    const listTrips =trips && trips.map((list) => {
         return <div key={list.id}>
-            <p><b>Viagem:</b> {list.name}</p>
+            <p key={list.id} onClick={() => goToTripDetailsPage(navigate)}><b>Viagem:</b> {list.name}</p>
+            <button onClick={() => deleteTrip(list.id)}> apagar</button>
         </div>
     })
 

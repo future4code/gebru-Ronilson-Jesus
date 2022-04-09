@@ -1,10 +1,32 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom"
+import useProtectedPage from '../hooks/useProtectedPage'
 import { goToAdminHomePage } from '../routes/Coordinator'
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 const TripDetailsPage = () => {
+    useProtectedPage()
     const navigate = useNavigate()
+    const [listTrips, setListTrips] = useState([])
+
+    useEffect(() => {
+        getTripDetail()
+    }, [])
+
+    const getTripDetail = (id) => {
+        axios
+            .get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/ronilson-souza-gebru/trip/${id}`)
+            .then((res) => {
+                setListTrips(res.data.trip)
+            })
+            .catch(() => { })
+
+    }
+
+    console.log(listTrips)
+
 
     return (
         <div>
