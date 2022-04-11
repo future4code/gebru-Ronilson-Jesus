@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { goToHomePage, goToCreateTripPage, goToLoginPage, goToTripDetailsPage } from '../routes/Coordinator'
 import useProtectedPage from '../hooks/useProtectedPage'
@@ -10,13 +10,13 @@ const AdminHomePage = () => {
     const navigate = useNavigate()
     const trips = RequestData("/trips")
 
-
-    const listTrips =trips && trips.map((list) => {
-        return <div key={list.id}>
-            <p key={list.id} onClick={() => goToTripDetailsPage(navigate)}><b>Viagem:</b> {list.name}</p>
+    const listTrips = trips && trips.map((list) => {
+        return <div key={list.id} >
+            <p onClick={() => goToTripDetailsPage(navigate, list.id)}><b>Nome:</b> {list.name}</p>
             <button onClick={() => deleteTrip(list.id)}> apagar</button>
         </div>
     })
+
 
     const logout = (navigate) => {
         localStorage.removeItem("token")

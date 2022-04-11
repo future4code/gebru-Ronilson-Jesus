@@ -7,7 +7,7 @@ const ListTripsPage = () => {
     const navigate = useNavigate()
     const trips = RequestData("/trips")
 
-    const listTrips = trips.map((list) => {
+    const listTrips = trips && trips.map((list) => {
         return <div key={list.id}>
             <p><b>Nome:</b> {list.name}</p>
             <p><b>Descrição:</b> {list.description}</p>
@@ -24,7 +24,7 @@ const ListTripsPage = () => {
                 <button onClick={() => goToApplicationFormPage(navigate)}>Inscrever-se</button>
             </div>
             <h3>Lista de Viagens</h3>
-            {listTrips}
+            {listTrips && listTrips.length > 0 ? listTrips : <p>Carregando...</p>}
         </div>
     )
 }

@@ -45,3 +45,17 @@ export const deleteTrip = (id) => {
         .catch((err) => alert(err.response.data.message))
 }
 
+export const decideCandidate = (tripId, candidateId, decision, getTripDetails) => {
+    const body = {
+        approve: decision
+    }
+
+    axios.put(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/ronilson-souza-gebru/trips/${tripId}/candidates/${candidateId}/decide`, body, {
+        headers: {auth: localStorage.getItem("token")}
+    })
+    .then(() => {
+        alert("Decisão registrada com sucesso!")
+        getTripDetails()
+    })
+    .catch((err) => alert(err.response.data.message))
+}

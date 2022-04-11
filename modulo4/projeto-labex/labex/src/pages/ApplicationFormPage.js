@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import RequestData from '../hooks/RequestData'
 import useForm from '../hooks/useForm'
@@ -8,31 +8,41 @@ import { sendApplication } from '../routes/request'
 
 const ApplicationFormPage = () => {
     const navigate = useNavigate()
+    const [tripId, setTripId] = useState("")
     const listTrips = RequestData("/trips")
     const { form, onChange, clear } = useForm({ name: "", age: "", applicationText: "", profession: "", country: "" })
+
+    const clearFields = () => {
+        clear()
+        setTripId("")
+    }
+
+    const onClickSend = (event) => {
+        event.preventDefault()
+        sendApplication(form, tripId, clearFields)
+    }
+
+    const onChangeTrip = (event) => {
+        setTripId(event.target.value)
+    }
+
+
 
     const selectTrips = listTrips && listTrips.map((list) => {
         return <option key={list.id}>{list.name}</option>
     })
 
-
-    const onClickSend = (e) => {
-        e.preventDefault()
-        sendApplication(form, clear)
-    }
-
     return (
         <div>
             <h1>Inscreva-se para uma viagem</h1>
             <form onSubmit={onClickSend}>
-                <select>
-                    <option value="">Escolha uma Viagem</option>
+                <select defaultValue="" onChange={onChangeTrip}>
+                    <option value="" disabled>Escolha uma Viagem</option>
                     {selectTrips}
                 </select>
                 <input
                     placeholder={"Nome"}
                     name={"name"}
-                    title={""}
                     value={form.name}
                     onChange={onChange}
 
@@ -74,7 +84,7 @@ const ApplicationFormPage = () => {
                 </select>
                 <div>
                     <button onClick={() => goToListTripsPage(navigate)}>Voltar</button>
-                    <button>Enviar</button>
+                    <button type={"submit"}>Enviar</button>
                 </div>
             </form>
         </div>
